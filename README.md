@@ -1,5 +1,8 @@
 # drag-drop-vue
 
+## Drag and Drop in action
+https://www.youtube.com/watch?v=SSME1GJTSjk
+
 ## Project setup
 ```
 npm install
