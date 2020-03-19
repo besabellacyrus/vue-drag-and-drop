@@ -2,7 +2,7 @@
   <div class="list-wrapper">
     <div
       class="item-wrapper"
-      v-for="(company, index) in computedCompanies"
+      v-for="(company, index) in companies"
       :key="index"
       draggable="false"
     >
@@ -33,47 +33,47 @@ export default {
         {
           name: 'Mobext Ph',
           position: 'Web Developer',
-          desc: 'Web Developer'
+          desc: 'Create website and CMS'
+        },
+        {
+          name: 'Sample Ph',
+          position: 'Web Developer ss',
+          desc: 'Web Developer sss'
         }
       ],
       draggedIndex: null,
       dragOverIndex: null
     }
   },
-  computed: {
-    computedCompanies () {
-      return this.array_move(this.companies, this.draggedIndex, this.dragOverIndex)
-    }
-  },
   mounted () {
     const items = document.querySelectorAll('.item-wrapper')
-
     items.forEach((e, index) => {
       e.ondragstart = () => {
         this.draggedIndex = index
       }
       e.onmousedown = (event) => {
         e.setAttribute('draggable', true)
-        console.log('mousedown')
       }
       e.ondragover = () => {
-        console.log('dragover', index)
         this.dragOverIndex = index
+        // console.log({ dragover: this.dragOverIndex, dragged: this.draggedIndex })
+        console.log('dragover', { dragover: this.dragOverIndex, dragged: this.draggedIndex })
+        // this.array_move(this.companies, this.draggedIndex, this.dragOverIndex)
       }
       e.ondragend = () => {
+        // this.array_move(this.companies, this.draggedIndex, this.dragOverIndex)
         e.setAttribute('draggable', false)
+        this.array_move(this.companies, this.draggedIndex, this.dragOverIndex)
       }
     })
   },
   methods: {
-    array_move (arr, oldIndex, newIndex) {
-      if (newIndex >= arr.length) {
-        var k = newIndex - arr.length + 1
-        while (k--) {
-          arr.push(undefined)
-        }
-      }
-      arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0])
+    array_move (arr, draggedIndex, dragOverIndex) {
+      // arr.splice(draggedIndex, 0, arr.splice(dragOverIndex, 1)[0])
+      // remove the item from array
+      const dragedItem = arr.splice(draggedIndex, 1)
+      arr.splice(dragOverIndex, 0, ...dragedItem)
+      // this.companies = arr
       return arr
     }
   }
